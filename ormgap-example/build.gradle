@@ -1,0 +1,40 @@
+buildscript {
+  repositories {
+    mavenCentral()
+
+    // NOTE: This is only needed when developing the plugin!
+    mavenLocal()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.12.2'
+    classpath 'com.github.stephanenicolas.ormgap:ormgap-plugin:1.0.0-SNAPSHOT'
+  }
+}
+
+apply plugin: 'android'
+apply plugin: 'ormgap'
+
+
+repositories {
+  mavenCentral()
+
+  // NOTE: This is only needed when developing the plugin!
+  mavenLocal()
+}
+
+dependencies {
+  compile 'com.j256.ormlite:ormlite-android:4.48'
+}
+
+android {
+  compileSdkVersion 21
+  buildToolsVersion '22.0.0'
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
+}
+
+ormgap {}

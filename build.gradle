@@ -1,0 +1,47 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://oss.sonatype.org/content/groups/public" }
+  }
+
+  dependencies {
+    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7.1'
+    classpath 'com.github.townsfolk:gradle-release:1.2'
+  }
+}
+
+allprojects {
+  repositories {
+    mavenCentral()
+  }
+
+  group = GROUP
+
+  apply plugin: 'maven'
+}
+
+apply plugin: 'release'
+createReleaseTag.dependsOn ':ormgap-plugin:uploadArchives'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.2.1'
+}
+
+task cleanExample(type: Exec) {
+  executable = '../gradlew'
+  workingDir = project.file('ormgap-example')
+  args = ['clean']
+}
+
+task assembleExample(type: Exec) {
+  executable = '../gradlew'
+  workingDir = project.file('ormgap-example')
+  args = ['assemble']
+}
+
+task installExample(type: Exec) {
+  executable = '../gradlew'
+  workingDir = project.file('ormgap-example')
+  args = ['installDebug']
+}
