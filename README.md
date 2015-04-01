@@ -1,4 +1,4 @@
-ORM Lite Android Gradle Plugin
+ORM Lite Android Gradle Plugin [![Build Status](https://travis-ci.org/stephanenicolas/ormlite-android-gradle-plugin.svg?branch=master)](https://travis-ci.org/stephanenicolas/ormlite-android-gradle-plugin)
 ========
 
 A Gradle plugin for Android to generate an ORMLite configuration file and boost DAOs creations.
