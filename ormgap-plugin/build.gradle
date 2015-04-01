@@ -10,6 +10,7 @@ buildscript {
 }
 
 apply plugin: 'groovy'
+apply plugin: 'java'
 apply plugin: 'nexus'
 
 repositories {
@@ -20,7 +21,7 @@ repositories {
 dependencies {
   compile gradleApi()
   compile localGroovy()
-  compile 'com.android.tools.build:gradle:0.12.2'
+  compile 'com.android.tools.build:gradle:1.1.3'
   compile("com.j256.ormlite:ormlite-android:$ORMLITE_VERSION")
 }
 

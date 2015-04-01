@@ -1,2 +1,2 @@
 include ':ormgap-plugin'
-//include ':ormgap-example'
+include ':ormgap-example'

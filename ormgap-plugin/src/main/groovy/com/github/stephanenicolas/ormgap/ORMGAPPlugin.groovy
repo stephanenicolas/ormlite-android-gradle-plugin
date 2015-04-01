@@ -32,7 +32,7 @@ public class ORMGAPPlugin implements Plugin<Project> {
     }
 
     final def log = project.logger
-    final String LOG_TAG = this.getClass().getName()
+    final String LOG_TAG = "ORMGAP"
 
     final def variants
     if (hasApp) {
@@ -44,38 +44,35 @@ public class ORMGAPPlugin implements Plugin<Project> {
     configure(project)
 
     variants.all { variant ->
-      log.debug(LOG_TAG, "Transforming classes in variant '${variant.name}'.")
+      log.debug(LOG_TAG, "In variant '${variant.name}'.")
 
       JavaCompile javaCompile = variant.javaCompile
       FileCollection classpathFileCollection = project.files(project.android.bootClasspath)
       classpathFileCollection += javaCompile.classpath
 
-      def transformTask = "transform${transformerClassName}${variant.name.capitalize()}"
-      project.task(transformTask, type: TransformationTask) {
-        description = "Transform a file using ${transformerClassName}"
-        destinationDir = project.file(transformationDir)
-        from("${javaCompile.destinationDir.path}")
-        transformation = transformer
-        classpath = classpathFileCollection
-        outputs.upToDateWhen {
-          false
-        }
-        eachFile {
-          log.debug(LOG_TAG, "Transformed:" + it.path)
-        }
+      def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
+      project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
+        description = "Create an ORM Lite configuration file"
+        //        configFile = project.file(transformationDir)
+        //        outputs.upToDateWhen {
+        //          false
+        //        }
       }
 
-      project.tasks.getByName(transformTask).mustRunAfter(javaCompile)
+      project.tasks.getByName(createConfigFileTask).mustRunAfter(javaCompile)
 
       log.debug(LOG_TAG, "Transformation installed after compile")
-      variant.assemble.dependsOn(transformTask)
+      variant.assemble.dependsOn(createConfigFileTask)
       if (!hasLib) {
-        variant.install?.dependsOn(transformTask)
+        variant.install?.dependsOn(createConfigFileTask)
       }
+      log.debug(LOG_TAG, "Done with variant '${variant.name}'.")
     }
+    log.debug(LOG_TAG, "Done.")
   }
 
-  protected void ensureProjectIsAndroidAppOrLib(PluginCollection<AppPlugin> hasApp, PluginCollection<LibraryPlugin> hasLib) {
+  protected void ensureProjectIsAndroidAppOrLib(PluginCollection<AppPlugin> hasApp,
+      PluginCollection<LibraryPlugin> hasLib) {
     if (!hasApp && !hasLib) {
       throw new IllegalStateException("'android' or 'android-library' plugin required.")
     }
