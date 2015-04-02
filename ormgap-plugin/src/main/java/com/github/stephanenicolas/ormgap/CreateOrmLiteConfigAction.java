@@ -1,50 +1,34 @@
 package com.github.stephanenicolas.ormgap;
 
-import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 import java.io.File;
-import org.gradle.api.logging.LogLevel;
-import org.gradle.api.logging.Logger;
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
- * Action to create the ORM Lite config file.
+ * Create the ORM Lite config file.
  * Allows to fully test the task.
  *
  * @author SNI.
  */
-public class CreateOrmLiteConfigAction extends OrmLiteConfigUtil {
+public class CreateOrmLiteConfigAction {
     private static final String ERROR_DURING_CREATION_CONFIG_FILE
         = "An error occurred during creation of ORM Lite config file.";
 
-    private final File destinationFile;
+    private final File configFile;
     private File searchDir;
-    private Logger logger;
+    private ClassLoader classLoader;
+    private final OrmLiteConfigUtil ormLiteConfigUtil = new OrmLiteConfigUtil();
 
-    public CreateOrmLiteConfigAction(File destinationFile,
-                                     File searchDir) {
-        this.destinationFile = destinationFile;
+    public CreateOrmLiteConfigAction(File configFile,
+                                     File searchDir,
+                                     ClassLoader classLoader) {
+        this.configFile = configFile;
         this.searchDir = searchDir;
+        this.classLoader = classLoader;
     }
 
-    public boolean execute() {
-        boolean result = true;
-        try {
-            writeConfigFile(destinationFile, searchDir);
-        } catch (Exception e) {
-            log(e, ERROR_DURING_CREATION_CONFIG_FILE);
-        }
-        return result;
-    }
-
-    private void log(Exception e, String msg) {
-        if (logger == null) {
-            System.out.println(msg);
-            e.printStackTrace();
-        } else {
-            logger.log(LogLevel.ERROR, msg, e);
-        }
-    }
-
-    public void setLogger(Logger logger) {
-        this.logger = logger;
+    public void execute() throws IOException, SQLException {
+        ormLiteConfigUtil.setClassLoader(classLoader);
+        ormLiteConfigUtil.writeConfigFile(configFile, searchDir);
     }
 }

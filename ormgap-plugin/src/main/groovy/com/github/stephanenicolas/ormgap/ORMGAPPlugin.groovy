@@ -44,31 +44,34 @@ public class ORMGAPPlugin implements Plugin<Project> {
     configure(project)
 
     variants.all { variant ->
-      log.debug(LOG_TAG, "In variant '${variant.name}'.")
+      log.debug("In variant '${variant.name}'.")
 
       JavaCompile javaCompile = variant.javaCompile
-      FileCollection classpathFileCollection = project.files(project.android.bootClasspath)
-      classpathFileCollection += javaCompile.classpath
 
       def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
       project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
         description = "Create an ORM Lite configuration file"
         //        configFile = project.file(transformationDir)
-        //        outputs.upToDateWhen {
-        //          false
-        //        }
+        outputs.upToDateWhen {
+          false
+        }
       }
 
+      FileCollection classpathFileCollection = project.files(project.android.bootClasspath)
+      classpathFileCollection += javaCompile.classpath
+      classpathFileCollection += project.files(javaCompile.destinationDir)
+
+      project.tasks.getByName(createConfigFileTask).setClasspath(classpathFileCollection.asPath)
       project.tasks.getByName(createConfigFileTask).mustRunAfter(javaCompile)
 
-      log.debug(LOG_TAG, "Transformation installed after compile")
+      log.debug("ORMLite config file creation task installed after compile task.")
       variant.assemble.dependsOn(createConfigFileTask)
       if (!hasLib) {
         variant.install?.dependsOn(createConfigFileTask)
       }
-      log.debug(LOG_TAG, "Done with variant '${variant.name}'.")
+      log.debug("Done with variant '${variant.name}'.")
     }
-    log.debug(LOG_TAG, "Done.")
+    log.debug("Done.")
   }
 
   protected void ensureProjectIsAndroidAppOrLib(PluginCollection<AppPlugin> hasApp,

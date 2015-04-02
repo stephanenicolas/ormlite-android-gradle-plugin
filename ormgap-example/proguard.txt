@@ -1,0 +1,9 @@
+-dontobfuscate
+-dontoptimize
+-dontpreverify
+-verbose
+-ignorewarnings
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+
+-keepattributes *Annotation*
