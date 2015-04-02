@@ -23,32 +23,32 @@ import org.gradle.api.tasks.TaskAction;
  * @author SNI
  */
 public class CreateOrmLiteConfigTask extends DefaultTask {
-    private File configFile;
+    private String configFileName;
     private Object sourceDir;
     private String classpath;
 
     public CreateOrmLiteConfigTask() {
-        this.sourceDir = getProject().file("src/main/java/");
+        this.sourceDir = getProject().file("src/main/");
+        configFileName = "ormlite_config.txt";
+    }
 
+    @OutputDirectory
+    public File getOutputDirectory() {
         File rawFolder = new File(this.getProject().getProjectDir(), "src/main/res/raw/");
         if (!rawFolder.exists()) {
             throw new StopExecutionException("Raw folder not found: " + rawFolder);
         }
 
-        configFile = new File(rawFolder, "ormlite_config.txt");
-    }
-
-    @OutputDirectory
-    public File getOutputDirectory() {
+        File configFile = new File(rawFolder, "ormlite_config.txt");
         return configFile.getParentFile();
     }
 
-    public File getConfigFile() {
-        return configFile;
+    public String getConfigFile() {
+        return configFileName;
     }
 
-    public void setConfigFile(File configFile) {
-        this.configFile = configFile;
+    public void setConfigFile(String configFileName) {
+        this.configFileName = configFileName;
     }
 
     public void setClasspath(String classpath) throws IOException {
@@ -74,23 +74,19 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         return result;
     }
 
-    public void into(Object configFile) {
-        this.configFile = getProject().file(configFile);
+    public void into(String configFileName) {
+        this.configFileName = configFileName;
     }
 
     @TaskAction
-    protected void exec() throws IOException, SQLException {
-        final File configFile = getConfigFile();
-        if (!configFile.exists()) {
-            configFile.createNewFile();
-        }
+    protected void exec() throws IOException, SQLException, InterruptedException {
         List<URL> urls = addClasspathToClassLoader(classpath);
         URLClassLoader urlClassLoader = new URLClassLoader(urls.toArray(new URL[urls.size()]));
 
         final CreateOrmLiteConfigAction createOrmLiteConfigAction
-            = new CreateOrmLiteConfigAction(configFile,
+            = new CreateOrmLiteConfigAction(configFileName,
                                             getProject().file(sourceDir),
-                                            urlClassLoader);
+                                            classpath);
 
         createOrmLiteConfigAction.execute();
 
