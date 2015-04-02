@@ -33,7 +33,7 @@ public class CreateOrmLiteConfigAction {
     public void execute() throws IOException, InterruptedException {
         String cmd = "cd "
             + searchDir.getAbsolutePath()
-            + " && /Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home//bin/java -cp "
+            + " && java -cp "
             + classpath
             + " com.j256.ormlite.android.apptools.OrmLiteConfigUtil "
             + configFile;
