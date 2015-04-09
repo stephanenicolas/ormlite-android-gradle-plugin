@@ -27,8 +27,7 @@ public class SimpleData {
     @DatabaseField
     boolean even;
 
-    SimpleData() {
-        // needed by ormlite
+    @SuppressWarnings("unused") SimpleData() {
     }
 
     public SimpleData(long millis) {

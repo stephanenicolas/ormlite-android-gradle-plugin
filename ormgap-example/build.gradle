@@ -25,6 +25,9 @@ repositories {
 
 dependencies {
   compile 'com.j256.ormlite:ormlite-android:4.48'
+  compile('com.github.stephanenicolas.ormgap:ormgap-plugin:1.0.0-SNAPSHOT') {
+    transitive = false
+  }
 }
 
 android {

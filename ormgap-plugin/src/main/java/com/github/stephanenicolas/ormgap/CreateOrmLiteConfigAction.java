@@ -14,13 +14,12 @@ public class CreateOrmLiteConfigAction {
     private static final String ERROR_DURING_CREATION_CONFIG_FILE
         = "An error occurred during creation of ORM Lite config file.";
 
-    private final String configFile;
+    private final File configFile;
     private File searchDir;
     private String classpath;
-    private ClassLoader classLoader;
     private final OrmLiteConfigUtil ormLiteConfigUtil = new OrmLiteConfigUtil();
 
-    public CreateOrmLiteConfigAction(String configFile,
+    public CreateOrmLiteConfigAction(File configFile,
                                      File searchDir,
                                      String classpath) {
         this.configFile = configFile;
@@ -33,12 +32,14 @@ public class CreateOrmLiteConfigAction {
             = new ProcessBuilder("java",
                                  "-cp",
                                  classpath,
-                                 "com.j256.ormlite.android.apptools.OrmLiteConfigUtil",
-                                 configFile);
-        builder.inheritIO();
-        builder.directory(searchDir);
-        Process process = builder.start();
-        final int result = process.waitFor();
+                                 "com.github.stephanenicolas.ormgap.OrmLiteConfigUtil",
+                                 configFile.getAbsolutePath(),
+                                 searchDir.getAbsolutePath());
+        System.out.println(builder.command());
+        builder
+            .inheritIO()
+            .directory(searchDir);
+        final int result = builder.start().waitFor();
         if (result != 0) {
             throw new RuntimeException("OrmLiteConfigUtil finished with code: " + result);
         }

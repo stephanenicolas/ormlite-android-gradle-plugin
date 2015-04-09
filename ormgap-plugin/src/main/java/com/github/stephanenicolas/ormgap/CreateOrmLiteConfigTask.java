@@ -17,13 +17,17 @@ import org.gradle.api.tasks.TaskAction;
  * @author SNI
  */
 public class CreateOrmLiteConfigTask extends DefaultTask {
-    private String configFileName;
+    private File configFileName;
     private Object sourceDir;
     private String classpath;
+    private final File rawDir;
 
     public CreateOrmLiteConfigTask() {
         this.sourceDir = getProject().file("src/main/");
-        configFileName = "ormlite_config.txt";
+        rawDir = getProject().file("src/main/res/raw/");
+        System.out.println("Raw dir " + rawDir.getAbsolutePath());
+        configFileName = new File(rawDir, "ormlite_config.txt");
+        System.out.println("configFileName " + configFileName.getAbsolutePath());
     }
 
     @OutputDirectory
@@ -35,14 +39,6 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
 
         File configFile = new File(rawFolder, "ormlite_config.txt");
         return configFile.getParentFile();
-    }
-
-    public String getConfigFile() {
-        return configFileName;
-    }
-
-    public void setConfigFile(String configFileName) {
-        this.configFileName = configFileName;
     }
 
     public void setClasspath(String classpath) throws IOException {
@@ -57,7 +53,7 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
     }
 
     public void into(String configFileName) {
-        this.configFileName = configFileName;
+        this.configFileName = new File(rawDir, configFileName);
     }
 
     @TaskAction
