@@ -56,6 +56,10 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         this.configFileName = new File(rawDir, configFileName);
     }
 
+    public void setSources(Object relativePath) {
+        this.sourceDir = getProject().file(relativePath);
+    }
+
     @TaskAction
     protected void exec() throws IOException, SQLException, InterruptedException {
         final CreateOrmLiteConfigAction createOrmLiteConfigAction
