@@ -1,2 +1,4 @@
 include ':ormgap-plugin'
+include ':ormgap-ormlite-extension'
 include ':ormgap-example'
+

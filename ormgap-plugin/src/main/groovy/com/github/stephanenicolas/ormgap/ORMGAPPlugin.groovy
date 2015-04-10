@@ -89,7 +89,11 @@ public class ORMGAPPlugin implements Plugin<Project> {
    * Can be used to add other extensions, plugins, etc.
    * @param project the project under build.
    */
-  protected void configure(Project project) {}
+  protected void configure(Project project) {
+    project.dependencies {
+      provided 'com.github.stephanenicolas.ormgap:ormgap-ormlite-extension:1.+'
+    }
+  }
 
   /**
    * @return the name of the class of the plugin extension associated to the project's extension.

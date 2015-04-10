@@ -23,6 +23,7 @@ dependencies {
   compile localGroovy()
   compile 'com.android.tools.build:gradle:1.1.3'
   compile("com.j256.ormlite:ormlite-android:$ORMLITE_VERSION")
+  project ':ormgap-ormlite-extension'
 }
 
 logging.captureStandardOutput LogLevel.INFO
