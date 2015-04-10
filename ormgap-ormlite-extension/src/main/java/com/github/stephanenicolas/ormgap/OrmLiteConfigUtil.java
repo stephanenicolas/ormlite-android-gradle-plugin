@@ -74,7 +74,7 @@ public class OrmLiteConfigUtil {
     /**
      * A call through to {@link #writeConfigFile(String)} taking the file name from the single command line argument.
      */
-    public static int main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         System.out.println("OrmLiteConfigUtil active");
         if (args.length > 2) {
             throw new IllegalArgumentException("TODO review that : Main can take 1 or 2 file-name argument.");
@@ -87,7 +87,6 @@ public class OrmLiteConfigUtil {
             System.out.println("  will generate the ORMLite config file and scan current folder for classes and res/raw dir.\n");
             System.out.println("* ..OrmLiteConfigUtil <config file name> <search directory>.\n");
             System.out.println("  will generate the ORMLite config file and scan the search directory for classes and res/raw dir.\n");
-            return 0;
         }
         if (args.length == 1) {
             String configFileName = args[0];
@@ -98,7 +97,6 @@ public class OrmLiteConfigUtil {
             writeConfigFile(configFile, searchDir);
         }
         System.out.println("OrmLiteConfigUtil done");
-        return 0;
     }
 
     /**
