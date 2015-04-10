@@ -63,8 +63,10 @@ public class ORMGAPPlugin implements Plugin<Project> {
       //SourceSet set
       //com.android.build.gradle.internal.api.DefaultAndroidSourceDirectorySet set
       //set.srcDirs[0].name
-      System.out.println("Sourceset variant2 " + project.android.sourceSets[variantName].properties)
-      System.out.println("Sourceset variant3 " + project.android.sourceSets[variantName].java.srcDirs[0].properties)
+      //System.out.println("Sourceset variant2 " + project.android.sourceSets[variantName].properties)
+      //System.out.println("Sourceset variant3 " + project.android.sourceSets[variantName].java.srcDirs[0].properties)
+
+      System.out.println("Sourceset variant3 " + project.android.sourceSets[variantName].res.srcDirs[0].properties)
 
       FileCollection classpathFileCollection = project.files(project.android.bootClasspath)
       classpathFileCollection += javaCompile.classpath
@@ -72,6 +74,8 @@ public class ORMGAPPlugin implements Plugin<Project> {
 
       project.tasks.getByName(createConfigFileTask).setClasspath(classpathFileCollection.asPath)
       project.tasks.getByName(createConfigFileTask).setSources(project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath)
+      project.tasks.getByName(createConfigFileTask).setResFolder(project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath)
+      project.tasks.getByName(createConfigFileTask).into("ormlite_config.txt")
       project.tasks.getByName(createConfigFileTask).mustRunAfter(javaCompile)
 
       log.debug("ORMLite config file creation task installed after compile task.")

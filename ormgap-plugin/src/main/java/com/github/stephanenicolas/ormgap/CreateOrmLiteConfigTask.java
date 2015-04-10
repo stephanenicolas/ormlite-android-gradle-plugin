@@ -20,14 +20,9 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
     private File configFileName;
     private Object sourceDir;
     private String classpath;
-    private final File rawDir;
+    private File rawDir;
 
     public CreateOrmLiteConfigTask() {
-        this.sourceDir = getProject().file("src/main/");
-        rawDir = getProject().file("src/main/res/raw/");
-        System.out.println("Raw dir " + rawDir.getAbsolutePath());
-        configFileName = new File(rawDir, "ormlite_config.txt");
-        System.out.println("configFileName " + configFileName.getAbsolutePath());
     }
 
     @OutputDirectory
@@ -54,10 +49,18 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
 
     public void into(String configFileName) {
         this.configFileName = new File(rawDir, configFileName);
+        //configFileName = new File(rawDir, "ormlite_config.txt");
+        System.out.println("configFileName " + this.configFileName.getAbsolutePath());
     }
 
     public void setSources(Object relativePath) {
         this.sourceDir = getProject().file(relativePath);
+    }
+
+    public void setResFolder(Object relativePath) {
+        File resFolder = getProject().file(relativePath);
+        rawDir = new File(resFolder, "raw");
+        System.out.println("Raw dir " + rawDir.getAbsolutePath());
     }
 
     @TaskAction
