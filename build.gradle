@@ -22,7 +22,7 @@ allprojects {
 }
 
 apply plugin: 'release'
-createReleaseTag.dependsOn ':ormgap-plugin:uploadArchives'
+createReleaseTag.dependsOn ':ormgap-plugin:uploadArchives', ':ormgap-ormlite-extension:uploadArchives'
 
 task wrapper(type: Wrapper) {
   gradleVersion = '2.2.1'
