@@ -80,7 +80,7 @@ public class OrmLiteConfigUtil {
             throw new IllegalArgumentException("TODO review that : Main can take 1 or 2 file-name argument.");
         }
 
-        if (args.length ==0 || args[0].equals(HELP_COMMAND)) {
+        if (args.length == 0 || args[0].equals(HELP_COMMAND)) {
             System.out.println("OrmLiteConfigUtil is a Java app that can create ORM Lite configuration to boost ORMLite performances.\n");
             System.out.println("Usages: .\n");
             System.out.println("* ..OrmLiteConfigUtil <config file name> .\n");
