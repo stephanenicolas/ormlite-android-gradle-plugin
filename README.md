@@ -1,4 +1,4 @@
-ORM Lite Android Gradle Plugin [![Build Status](https://travis-ci.org/stephanenicolas/ormlite-android-gradle-plugin.svg?branch=master)](https://travis-ci.org/stephanenicolas/ormlite-android-gradle-plugin)][![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.ormgap/ormgap-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.ormgap/ormgap-plugin)
+ORM Lite Android Gradle Plugin [![Build Status](https://travis-ci.org/stephanenicolas/ormlite-android-gradle-plugin.svg?branch=master)](https://travis-ci.org/stephanenicolas/ormlite-android-gradle-plugin)[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.ormgap/ormgap-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.ormgap/ormgap-plugin)
 --------
 ========
 
