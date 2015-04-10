@@ -62,6 +62,7 @@ public class OrmLiteConfigUtil {
      * Raw directory name that we are looking for.
      */
     protected static final String RAW_DIR_NAME = "raw";
+    public static final String HELP_COMMAND = "--help";
 
     /**
      * Maximum recursion level while we are looking for source files.
@@ -73,18 +74,31 @@ public class OrmLiteConfigUtil {
     /**
      * A call through to {@link #writeConfigFile(String)} taking the file name from the single command line argument.
      */
-    public static void main(String[] args) throws Exception {
-        System.out.println("In OrmLiteConfigUtil");
+    public static int main(String[] args) throws Exception {
+        System.out.println("OrmLiteConfigUtil active");
         if (args.length > 2) {
             throw new IllegalArgumentException("TODO review that : Main can take 1 or 2 file-name argument.");
         }
-        if (args.length == 1) {
-            writeConfigFile(args[0]);
-        } else {
-            File configFileName = new File(args[0]);
-            File searchDir = new File(args[1]);
-            writeConfigFile(configFileName, searchDir);
+
+        if (args.length ==0 || args[0].equals(HELP_COMMAND)) {
+            System.out.println("OrmLiteConfigUtil is a Java app that can create ORM Lite configuration to boost ORMLite performances.\n");
+            System.out.println("Usages: .\n");
+            System.out.println("* ..OrmLiteConfigUtil <config file name> .\n");
+            System.out.println("  will generate the ORMLite config file and scan current folder for classes and res/raw dir.\n");
+            System.out.println("* ..OrmLiteConfigUtil <config file name> <search directory>.\n");
+            System.out.println("  will generate the ORMLite config file and scan the search directory for classes and res/raw dir.\n");
+            return 0;
         }
+        if (args.length == 1) {
+            String configFileName = args[0];
+            writeConfigFile(configFileName);
+        } else {
+            File configFile = new File(args[0]);
+            File searchDir = new File(args[1]);
+            writeConfigFile(configFile, searchDir);
+        }
+        System.out.println("OrmLiteConfigUtil done");
+        return 0;
     }
 
     /**
