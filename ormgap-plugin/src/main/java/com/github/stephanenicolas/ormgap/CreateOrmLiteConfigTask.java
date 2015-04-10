@@ -49,7 +49,6 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
 
     public void into(String configFileName) {
         this.configFileName = new File(rawDir, configFileName);
-        //configFileName = new File(rawDir, "ormlite_config.txt");
         System.out.println("configFileName " + this.configFileName.getAbsolutePath());
     }
 

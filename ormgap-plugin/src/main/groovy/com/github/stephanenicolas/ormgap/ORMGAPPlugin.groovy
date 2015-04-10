@@ -49,33 +49,22 @@ public class ORMGAPPlugin implements Plugin<Project> {
 
       JavaCompile javaCompile = variant.javaCompile
 
-      String variantName = ((ApplicationVariant) variant).mergedFlavor.name
-      def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
-      project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
-        description = "Create an ORM Lite configuration file"
-        //        configFile = project.file(transformationDir)
-
-        outputs.upToDateWhen {
-          false
-        }
-      }
-      System.out.println("Sourceset variant1 " + variantName)
-      //SourceSet set
-      //com.android.build.gradle.internal.api.DefaultAndroidSourceDirectorySet set
-      //set.srcDirs[0].name
-      //System.out.println("Sourceset variant2 " + project.android.sourceSets[variantName].properties)
-      //System.out.println("Sourceset variant3 " + project.android.sourceSets[variantName].java.srcDirs[0].properties)
-
-      System.out.println("Sourceset variant3 " + project.android.sourceSets[variantName].res.srcDirs[0].properties)
-
       FileCollection classpathFileCollection = project.files(project.android.bootClasspath)
       classpathFileCollection += javaCompile.classpath
       classpathFileCollection += project.files(javaCompile.destinationDir)
 
-      project.tasks.getByName(createConfigFileTask).setClasspath(classpathFileCollection.asPath)
-      project.tasks.getByName(createConfigFileTask).setSources(project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath)
-      project.tasks.getByName(createConfigFileTask).setResFolder(project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath)
-      project.tasks.getByName(createConfigFileTask).into("ormlite_config.txt")
+      String variantName = ((ApplicationVariant) variant).mergedFlavor.name
+      def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
+      project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
+        description = "Create an ORM Lite configuration file"
+        setSources(project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath)
+        setResFolder(project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath)
+        setClasspath(classpathFileCollection.asPath)
+        into("ormlite_config.txt")
+        outputs.upToDateWhen {
+          false
+        }
+      }
       project.tasks.getByName(createConfigFileTask).mustRunAfter(javaCompile)
 
       log.debug("ORMLite config file creation task installed after compile task.")
