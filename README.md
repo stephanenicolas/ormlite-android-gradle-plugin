@@ -38,7 +38,7 @@ We basically just automated a technique that is considered the [best practice fo
 ORMGAP will do the following to your build : 
 * create a task for each variant to generate the ORMLite configuration file (this is customizable, TODO explain the plugin extension).
 * we also add a provided dependency to your build that contains our forked utility class. This should disappear in a close future, as soon as we submit a PR to ORM Lite and a new version is released... TODO : submit a PR with ORMLiteConfigUtil changes.
-* 
+
 ### Benchmarking
 
 Our plan is to make a benchmarking app using th example android app.
