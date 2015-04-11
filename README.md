@@ -31,6 +31,14 @@ apply plugin: 'ormgap'
 
 An example can be found [in the GH repo](https://github.com/stephanenicolas/ormlite-android-gradle-plugin/tree/master/ormgap-example).
 
+### How does it work ? 
+
+We basically just automated a technique that is considered the [best practice for ORM Lite on Android](http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_4.html#Config-Optimization) : it uses a configuration file, genereated at build time, so that ORMLite doesn't scan annotations.
+
+ORMGAP will do the following to your build : 
+* create a task for each variant to generate the ORMLite configuration file (this is customizable, TODO explain the plugin extension).
+* we also add a provided dependency to your build that contains our forked utility class. This should disappear in a close future, as soon as we submit a PR to ORM Lite and a new version is released... TODO : submit a PR with ORMLiteConfigUtil changes.
+* 
 ### Benchmarking
 
 Our plan is to make a benchmarking app using th example android app.
