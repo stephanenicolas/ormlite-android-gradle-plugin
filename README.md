@@ -27,6 +27,26 @@ apply plugin: 'ormgap'
 
 ```
 
+You will then need to create your database using the ORMLite config file that will be generated during your build (note : you first need to boostrap the system, get a file generated, then reference it.)
+
+```java
+public DatabaseHelper(Context context) {
+    super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
+}
+```
+
+If you use DAOs : you will need to use the second contructor of ORMLite's DAO class : 
+```java
+public MyDao(ConnectionSource connectionSource, DatabaseTableConfig tableConfig)
+   throws SQLException {
+   super(connectionSource, tableConfig);
+}
+```
+
+You're all set. 
+See (ORM Lite docs)[http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite.html#Top] for further instructions.
+
+
 ### Example
 
 An example can be found [in the GH repo](https://github.com/stephanenicolas/ormlite-android-gradle-plugin/tree/master/ormgap-example).
