@@ -44,7 +44,7 @@ public MyDao(ConnectionSource connectionSource, DatabaseTableConfig tableConfig)
 ```
 
 You're all set. 
-See (ORM Lite docs)[http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite.html#Top] for further instructions.
+See [ORM Lite docs](http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite.html#Top) for further instructions.
 
 
 ### Example
