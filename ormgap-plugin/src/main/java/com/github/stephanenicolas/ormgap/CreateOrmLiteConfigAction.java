@@ -35,7 +35,6 @@ public class CreateOrmLiteConfigAction {
                                  "com.github.stephanenicolas.ormgap.OrmLiteConfigUtil",
                                  configFile.getAbsolutePath(),
                                  searchDir.getAbsolutePath());
-        System.out.println(builder.command());
         builder
             .inheritIO()
             .directory(searchDir);

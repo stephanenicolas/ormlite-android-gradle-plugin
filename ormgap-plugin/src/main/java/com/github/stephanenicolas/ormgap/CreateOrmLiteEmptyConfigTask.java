@@ -16,13 +16,11 @@ import org.gradle.api.tasks.TaskAction;
  *
  * @author SNI
  */
-public class CreateOrmLiteConfigTask extends DefaultTask {
+public class CreateOrmLiteEmptyConfigTask extends DefaultTask {
     private File configFileName;
-    private Object sourceDir;
-    private String classpath;
     private File rawDir;
 
-    public CreateOrmLiteConfigTask() {
+    public CreateOrmLiteEmptyConfigTask() {
     }
 
     @OutputDirectory
@@ -36,23 +34,20 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         return configFile.getParentFile();
     }
 
-    public void setClasspath(String classpath) throws IOException {
-        this.classpath = classpath;
-    }
-
     @InputFiles
     public FileCollection getSources() {
-        ConfigurableFileTree result = getProject().fileTree(this.sourceDir);
-        result.include("**/*.java");
+        File rawFolder = new File(this.getProject().getProjectDir(), "src/main/res/raw/");
+        if (!rawFolder.exists()) {
+            throw new StopExecutionException("Raw folder not found: " + rawFolder);
+        }
+
+        File configFile = new File(rawFolder, "ormlite_config.txt");
+        ConfigurableFileTree result = getProject().fileTree(configFile);
         return result;
     }
 
     public void into(String configFileName) {
         this.configFileName = new File(rawDir, configFileName);
-    }
-
-    public void setSources(Object relativePath) {
-        this.sourceDir = getProject().file(relativePath);
     }
 
     public void setResFolder(Object relativePath) {
@@ -62,12 +57,10 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
 
     @TaskAction
     protected void exec() throws IOException, SQLException, InterruptedException {
-        final CreateOrmLiteConfigAction createOrmLiteConfigAction
-            = new CreateOrmLiteConfigAction(configFileName,
-                                            getProject().file(sourceDir),
-                                            classpath);
+        final CreateOrmLiteEmptyConfigAction createOrmLiteEmptyConfigAction
+            = new CreateOrmLiteEmptyConfigAction(configFileName);
 
-        createOrmLiteConfigAction.execute();
+        createOrmLiteEmptyConfigAction.execute();
 
         this.setDidWork(true);
     }

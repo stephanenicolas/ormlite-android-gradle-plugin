@@ -5,6 +5,10 @@ dependencies {
   compile 'com.j256.ormlite:ormlite-android:4.48'
 }
 
+javadoc {
+  failOnError = false
+}
+
 modifyPom {
   project {
     name "ORM LITE Android Gradle plugin ORMLite Extension"
