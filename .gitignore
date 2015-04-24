@@ -29,3 +29,6 @@ proguard/
 #Android Studio/Intelli J
 .idea/
 *.iml
+
+#ORMGAP
+ormlite_config.txt
