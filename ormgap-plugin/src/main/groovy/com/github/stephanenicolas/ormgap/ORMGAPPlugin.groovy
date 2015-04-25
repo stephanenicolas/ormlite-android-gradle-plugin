@@ -73,7 +73,7 @@ public class ORMGAPPlugin implements Plugin<Project> {
       project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
         description = "Create an ORM Lite configuration file"
         setSources(project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath)
-        setResFolder(project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath)
+        setResFolder(variant.mergeResources.outputDir.canonicalPath)
         setClasspath(classpathFileCollection.asPath)
         into("ormlite_config.txt")
         outputs.upToDateWhen {
