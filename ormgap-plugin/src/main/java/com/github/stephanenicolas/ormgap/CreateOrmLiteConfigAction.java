@@ -3,6 +3,7 @@ package com.github.stephanenicolas.ormgap;
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 import java.io.File;
 import java.io.IOException;
+import org.gradle.api.logging.Logger;
 
 /**
  * Create the ORM Lite config file.
@@ -17,14 +18,17 @@ public class CreateOrmLiteConfigAction {
     private final File configFile;
     private File searchDir;
     private String classpath;
+    private Logger logger;
     private final OrmLiteConfigUtil ormLiteConfigUtil = new OrmLiteConfigUtil();
 
     public CreateOrmLiteConfigAction(File configFile,
                                      File searchDir,
-                                     String classpath) {
+                                     String classpath,
+                                     Logger logger) {
         this.configFile = configFile;
         this.searchDir = searchDir;
         this.classpath = classpath;
+        this.logger = logger;
     }
 
     public void execute() throws IOException, InterruptedException {
@@ -35,6 +39,8 @@ public class CreateOrmLiteConfigAction {
                                  "com.github.stephanenicolas.ormgap.OrmLiteConfigUtil",
                                  configFile.getAbsolutePath(),
                                  searchDir.getAbsolutePath());
+
+        logger.debug("Generating ORMLite Config file using command line:", builder.command());
         builder
             .inheritIO()
             .directory(searchDir);

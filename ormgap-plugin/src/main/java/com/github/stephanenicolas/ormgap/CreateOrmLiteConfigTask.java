@@ -65,7 +65,7 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         final CreateOrmLiteConfigAction createOrmLiteConfigAction
             = new CreateOrmLiteConfigAction(configFileName,
                                             getProject().file(sourceDir),
-                                            classpath);
+                                            classpath, getLogger());
 
         createOrmLiteConfigAction.execute();
 

@@ -55,25 +55,11 @@ public class ORMGAPPlugin implements Plugin<Project> {
 
       String variantName = ((ApplicationVariant) variant).mergedFlavor.name
 
-      def createEmptyConfigFileTask = "createORMLiteEmptyConfigFile${variant.name.capitalize()}"
-      project.task(createEmptyConfigFileTask, type: CreateOrmLiteEmptyConfigTask) {
-        description = "Create an empty ORM Lite configuration file"
-        setResFolder(project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath)
-        into("ormlite_config.txt")
-        outputs.upToDateWhen {
-          false
-        }
-      }
-
-
-      variant.mergeResources.dependsOn(project.tasks.getByName(createEmptyConfigFileTask));
-      log.debug("ORMLite config file creation task installed before mergeResources task.")
-
       def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
       project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
         description = "Create an ORM Lite configuration file"
         setSources(project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath)
-        setResFolder(variant.mergeResources.outputDir.canonicalPath)
+        setResFolder(project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath)
         setClasspath(classpathFileCollection.asPath)
         into("ormlite_config.txt")
         outputs.upToDateWhen {
