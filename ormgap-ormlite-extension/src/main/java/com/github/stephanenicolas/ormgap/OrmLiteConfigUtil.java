@@ -20,9 +20,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -162,7 +160,6 @@ public class OrmLiteConfigUtil {
     public static void writeConfigFile(OutputStream outputStream, Class<?>[] classes) throws SQLException, IOException {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream), 4096);
         try {
-            writeHeader(writer);
             for (Class<?> clazz : classes) {
                 writeConfigForTable(writer, clazz);
             }
@@ -186,15 +183,6 @@ public class OrmLiteConfigUtil {
             dir = dir.getParentFile();
         }
         return null;
-    }
-
-    private static void writeHeader(BufferedWriter writer) throws IOException {
-        writer.append('#');
-        writer.newLine();
-        writer.append("# generated on ").append(new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new Date()));
-        writer.newLine();
-        writer.append('#');
-        writer.newLine();
     }
 
     private static void findAnnotatedClasses(List<Class<?>> classList, File dir, int level) throws SQLException,
