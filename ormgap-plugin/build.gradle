@@ -27,6 +27,15 @@ dependencies {
 }
 
 logging.captureStandardOutput LogLevel.INFO
+//we create a file in the plugin project containing the urrent project version
+//it will be used later by the plugin to add the proper version of
+//dependencies to the project that uses the plugin
+def prop = new Properties()
+def propFile = new File("${project.rootDir}/ormgap-plugin/src/main/resources/build.properties")
+System.out.println(propFile.getAbsolutePath());
+prop.setProperty("com.github.stephanenicolas.ormgap.version", "$version")
+propFile.createNewFile();
+prop.store(propFile.newWriter(), null);
 
 modifyPom {
   project {

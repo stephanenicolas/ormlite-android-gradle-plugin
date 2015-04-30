@@ -91,8 +91,12 @@ public class ORMGAPPlugin implements Plugin<Project> {
    * @param project the project under build.
    */
   protected void configure(Project project) {
+    //we use the file build.properties that contains the version of
+    //the extension to use. This avoids all problems related to using version x.y.+
+    Properties properties = new Properties()
+    properties.load(getClass().getClassLoader().getResourceAsStream("build.properties"))
     project.dependencies {
-      provided 'com.github.stephanenicolas.ormgap:ormgap-ormlite-extension:1.+'
+      provided 'com.github.stephanenicolas.ormgap:ormgap-ormlite-extension:' + properties.get("com.github.stephanenicolas.ormgap.version")
     }
   }
 

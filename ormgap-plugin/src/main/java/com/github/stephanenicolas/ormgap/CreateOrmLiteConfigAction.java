@@ -1,6 +1,5 @@
 package com.github.stephanenicolas.ormgap;
 
-import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 import java.io.File;
 import java.io.IOException;
 import org.gradle.api.logging.Logger;
@@ -12,14 +11,10 @@ import org.gradle.api.logging.Logger;
  * @author SNI.
  */
 public class CreateOrmLiteConfigAction {
-    private static final String ERROR_DURING_CREATION_CONFIG_FILE
-        = "An error occurred during creation of ORM Lite config file.";
-
     private final File configFile;
     private File searchDir;
     private String classpath;
     private Logger logger;
-    private final OrmLiteConfigUtil ormLiteConfigUtil = new OrmLiteConfigUtil();
 
     public CreateOrmLiteConfigAction(File configFile,
                                      File searchDir,
@@ -40,7 +35,7 @@ public class CreateOrmLiteConfigAction {
                                  configFile.getAbsolutePath(),
                                  searchDir.getAbsolutePath());
 
-        logger.debug("Generating ORMLite Config file using command line:", builder.command());
+        logger.debug("Generating ORMLite Config file using command line: " + builder.command());
         builder
             .inheritIO()
             .directory(searchDir);
