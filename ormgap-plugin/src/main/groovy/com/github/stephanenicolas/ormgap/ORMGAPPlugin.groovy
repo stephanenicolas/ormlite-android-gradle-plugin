@@ -3,6 +3,7 @@ package com.github.stephanenicolas.ormgap
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.api.ApplicationVariant
+import com.android.build.gradle.api.LibraryVariant
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
@@ -53,7 +54,12 @@ public class ORMGAPPlugin implements Plugin<Project> {
       classpathFileCollection += javaCompile.classpath
       classpathFileCollection += project.files(javaCompile.destinationDir)
 
-      String variantName = ((ApplicationVariant) variant).mergedFlavor.name
+      String variantName
+      if (variant instanceof ApplicationVariant){
+        variantName = ((ApplicationVariant) variant).mergedFlavor.name
+      }else if (variant instanceof LibraryVariant){
+        variantName = ((LibraryVariant) variant).mergedFlavor.name
+      }
 
       def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
       project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
