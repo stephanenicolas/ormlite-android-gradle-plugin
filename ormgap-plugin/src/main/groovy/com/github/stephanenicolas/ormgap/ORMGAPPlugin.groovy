@@ -56,16 +56,21 @@ public class ORMGAPPlugin implements Plugin<Project> {
 
       String variantName
       if (variant instanceof ApplicationVariant){
-        variantName = ((ApplicationVariant) variant).mergedFlavor.name
-      }else if (variant instanceof LibraryVariant){
+        variantName = ((ApplicationVariant) variant).productFlavors[0]?.name
+      } else if (variant instanceof LibraryVariant){
         variantName = ((LibraryVariant) variant).mergedFlavor.name
+      }
+
+      // Use default buildvariant
+      if(variantName == null || "".equals(variantName)){
+          variantName = "main"
       }
 
       def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
       project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
         description = "Create an ORM Lite configuration file"
-        setSources(project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath)
-        setResFolder(project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath)
+        setSources(getPath(project,project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath,false))
+        setResFolder(getPath(project,project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath,true))
         setClasspath(classpathFileCollection.asPath)
         into("ormlite_config.txt")
         outputs.upToDateWhen {
@@ -83,6 +88,18 @@ public class ORMGAPPlugin implements Plugin<Project> {
     }
     log.debug("Done.")
   }
+
+    private String getPath(Project project,String path,boolean isRes){
+        File f = new File(path);
+        if (!f.exists()){
+            if (isRes){
+                return project.android.sourceSets["main"].res.srcDirs[0].canonicalPath
+            } else {
+                return project.android.sourceSets["main"].java.srcDirs[0].canonicalPath
+            }
+        }
+        return path;
+    }
 
   protected void ensureProjectIsAndroidAppOrLib(PluginCollection<AppPlugin> hasApp,
       PluginCollection<LibraryPlugin> hasLib) {
