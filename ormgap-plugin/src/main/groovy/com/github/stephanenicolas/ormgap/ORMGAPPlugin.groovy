@@ -69,8 +69,20 @@ public class ORMGAPPlugin implements Plugin<Project> {
       def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
       project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
         description = "Create an ORM Lite configuration file"
-        setSources(getPath(project,project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath,false))
-        setResFolder(getPath(project,project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath,true))
+
+        def path = project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath
+        if (new File(path).exists()) {
+          setSources(path);
+        } else {
+          setSources(project.android.sourceSets["main"].java.srcDirs[0].canonicalPath)
+        }
+
+        path = project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath
+        if (new File(path).exists()) {
+          setResFolder(path);
+        } else {
+          setResFolder(project.android.sourceSets["main"].res.srcDirs[0].canonicalPath)
+        }
         setClasspath(classpathFileCollection.asPath)
         into("ormlite_config.txt")
         outputs.upToDateWhen {
@@ -88,18 +100,6 @@ public class ORMGAPPlugin implements Plugin<Project> {
     }
     log.debug("Done.")
   }
-
-    private String getPath(Project project,String path,boolean isRes){
-        File f = new File(path);
-        if (!f.exists()){
-            if (isRes){
-                return project.android.sourceSets["main"].res.srcDirs[0].canonicalPath
-            } else {
-                return project.android.sourceSets["main"].java.srcDirs[0].canonicalPath
-            }
-        }
-        return path;
-    }
 
   protected void ensureProjectIsAndroidAppOrLib(PluginCollection<AppPlugin> hasApp,
       PluginCollection<LibraryPlugin> hasLib) {
