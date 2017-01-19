@@ -58,6 +58,12 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
     public void setResFolder(Object relativePath) {
         File resFolder = getProject().file(relativePath);
         rawDir = new File(resFolder, "raw");
+        if(!rawDir.exists()) {
+            final boolean wasRawDirCreated = rawDir.mkdirs();
+            if(!wasRawDirCreated) {
+                throw new RuntimeException("Impossible to create raw folder:" + rawDir.getAbsolutePath());
+            }
+        }
     }
 
     @TaskAction
