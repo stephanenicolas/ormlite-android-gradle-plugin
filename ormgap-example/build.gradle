@@ -1,6 +1,7 @@
 buildscript {
   repositories {
     mavenCentral()
+    jcenter()
 
     // NOTE: This is only needed when developing the plugin!
     mavenLocal()
