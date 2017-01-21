@@ -6,7 +6,7 @@ A Gradle plugin for Android to generate an ORMLite configuration file and boost 
 
 ### Usage 
 
-```xml
+```gradle
 //build.gradle
 
 buildscript {
@@ -61,7 +61,7 @@ ORMGAP will do the following to your build :
 
 ### Benchmarking
 
-Our plan is to make a benchmarking app using th example android app.
+Our plan is to make a benchmarking app using the example android app.
 
 For now, we can only give you a number from our experience at Groupon: the average gain, for all devices of our 50 million users is 10 ms per DAO creation. It might not seem much, but for large apps, it makes a difference. In our app, we gained 400 ms with ORMGAP.
 
@@ -73,7 +73,7 @@ Travis is almost ready at : https://travis-ci.org/stephanenicolas/ormlite-androi
 
 ORMGAP has been possible thanks to [Groupon](http://groupon.com) ! 
 
-<img src="https://pbs.twimg.com/profile_images/428288841082871808/Q114lCq3_400x400.png" alt="Groupon logo" width= "200px" height= "200px"/>
+<img src="https://avatars3.githubusercontent.com/u/206233?v=3&s=200" alt="Groupon logo" width= "200px" height= "200px"/>
 
 And, yes, [we are hiring Android coders](https://jobs.groupon.com/careers/engineering/).
 
