@@ -6,7 +6,7 @@ A Gradle plugin for Android to generate an ORMLite configuration file and boost 
 
 ### Usage 
 
-```xml
+```groovy
 //build.gradle
 
 buildscript {
@@ -73,7 +73,7 @@ Travis is almost ready at : https://travis-ci.org/stephanenicolas/ormlite-androi
 
 ORMGAP has been possible thanks to [Groupon](http://groupon.com) ! 
 
-<img src="https://pbs.twimg.com/profile_images/428288841082871808/Q114lCq3_400x400.png" alt="Groupon logo" width= "200px" height= "200px"/>
+<img src="https://avatars2.githubusercontent.com/u/206233?v=3&s=70" alt="Groupon logo" width= "200px" height= "200px"/>
 
 And, yes, [we are hiring Android coders](https://jobs.groupon.com/careers/engineering/).
 
