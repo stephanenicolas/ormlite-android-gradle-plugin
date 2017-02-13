@@ -73,7 +73,7 @@ Travis is almost ready at : https://travis-ci.org/stephanenicolas/ormlite-androi
 
 ORMGAP has been possible thanks to [Groupon](http://groupon.com) ! 
 
-<img src="https://avatars2.githubusercontent.com/u/206233?v=3&s=70" alt="Groupon logo" width= "200px" height= "200px"/>
+<img src="https://avatars2.githubusercontent.com/u/206233?v=3&s=70" alt="Groupon logo"/>
 
 And, yes, [we are hiring Android coders](https://jobs.groupon.com/careers/engineering/).
 
