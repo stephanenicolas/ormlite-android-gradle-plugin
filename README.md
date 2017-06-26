@@ -17,7 +17,7 @@ buildscript {
 
   dependencies {
     ...
-    classpath 'com.github.stephanenicolas.ormgap:ormgap-plugin:1.0.0-SNAPSHOT'
+    classpath 'com.github.stephanenicolas.ormgap:ormgap-plugin:x.y.z'
   }
 }
 
