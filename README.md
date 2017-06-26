@@ -4,6 +4,8 @@ ORM Lite Android Gradle Plugin [![Build Status](https://travis-ci.org/stephaneni
 
 A Gradle plugin for Android to generate an ORMLite configuration file and boost DAOs creations.
 
+As of version 1.0.13, ORM GAP is fully incremental and should process only classes using ormlite.
+
 ### Usage 
 
 ```groovy
