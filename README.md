@@ -1,10 +1,9 @@
 ORM Lite Android Gradle Plugin [![Build Status](https://travis-ci.org/stephanenicolas/ormlite-android-gradle-plugin.svg?branch=master)](https://travis-ci.org/stephanenicolas/ormlite-android-gradle-plugin)[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.ormgap/ormgap-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.ormgap/ormgap-plugin)
 --------
-========
 
 A Gradle plugin for Android to generate an ORMLite configuration file and boost DAOs creations.
 
-As of version 1.0.13, ORM GAP is fully incremental and get executed only when classes using ormlite change.
+As of version 1.0.13, ORM GAP is fully incremental and gets executed only when classes using ormlite change.
 
 ### Usage 
 
