@@ -85,11 +85,7 @@ public class ORMGAPPlugin implements Plugin<Project> {
         }
         setClasspath(classpathFileCollection.asPath)
         into("ormlite_config.txt")
-        outputs.upToDateWhen {
-          false
-        }
-      }
-      project.tasks.getByName(createConfigFileTask).mustRunAfter(javaCompile)
+      }.dependsOn(javaCompile)
 
       log.debug("ORMLite config file creation task installed after compile task.")
       variant.assemble.dependsOn(createConfigFileTask)
