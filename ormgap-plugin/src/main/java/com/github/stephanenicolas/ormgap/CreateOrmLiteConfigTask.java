@@ -7,9 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.gradle.api.Action;
@@ -19,7 +17,6 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.file.collections.SimpleFileCollection;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 import org.gradle.api.tasks.incremental.InputFileDetails;
@@ -34,7 +31,7 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
     private File configFileName;
     private Object sourceDir;
     private String classpath;
-    private File rawDir;
+    private File dstDir;
 
     public CreateOrmLiteConfigTask() {
     }
@@ -48,12 +45,7 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
 
     @OutputFile
     public File getOutputFile() {
-        File rawFolder = new File(this.getProject().getProjectDir(), "src/main/res/raw/");
-        if (!rawFolder.exists()) {
-            throw new StopExecutionException("Raw folder not found: " + rawFolder);
-        }
-
-        return new File(rawFolder, "ormlite_config.txt");
+        return new File(dstDir, "ormlite_config.txt");
     }
 
     @OutputFile
@@ -72,20 +64,19 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
     }
 
     public void into(String configFileName) {
-        this.configFileName = new File(rawDir, configFileName);
+        this.configFileName = new File(dstDir, configFileName);
     }
 
     public void setSources(Object relativePath) {
         this.sourceDir = getProject().file(relativePath);
     }
 
-    public void setResFolder(Object relativePath) {
-        File resFolder = getProject().file(relativePath);
-        rawDir = new File(resFolder, "raw");
-        if (!rawDir.exists()) {
-            final boolean wasRawDirCreated = rawDir.mkdirs();
-            if (!wasRawDirCreated) {
-                throw new RuntimeException("Impossible to create raw folder:" + rawDir.getAbsolutePath());
+    public void setDestDirFolder(Object relativePath) {
+        dstDir = getProject().file(relativePath);
+        if (!dstDir.exists()) {
+            final boolean wasAssetsDirCreated = dstDir.mkdirs();
+            if (!wasAssetsDirCreated) {
+                throw new RuntimeException("Impossible to create destination folder:" + dstDir.getAbsolutePath());
             }
         }
     }
