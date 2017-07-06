@@ -84,7 +84,7 @@ public class ORMGAPPlugin implements Plugin<Project> {
           setResFolder(project.android.sourceSets["main"].res.srcDirs[0].canonicalPath)
         }
         setClasspath(classpathFileCollection.asPath)
-        into("ormlite_config.txt")
+        into(project.ormgap.configFileName)
       }.dependsOn(javaCompile)
 
       log.debug("ORMLite config file creation task installed after compile task.")
