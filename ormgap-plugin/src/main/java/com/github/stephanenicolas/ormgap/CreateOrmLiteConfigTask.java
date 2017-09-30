@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,6 +17,7 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.file.collections.SimpleFileCollection;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
@@ -26,6 +29,7 @@ import org.gradle.api.tasks.incremental.InputFileDetails;
  *
  * @author SNI
  */
+@CacheableTask
 public class CreateOrmLiteConfigTask extends DefaultTask {
     public static final String TASK_TEMP_FILE__NAME = "intermediates/incremental/createOrmLiteConfigTask/";
     private File configFileName;
@@ -139,13 +143,14 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         return hasChanged.get();
     }
 
-    private void saveFileNames(Iterable<String> fileNameSet) throws IOException {
+    private void saveFileNames(Set<String> fileNameSet) throws IOException {
         getLogger().debug("saving new state: " + fileNameSet.toString());
         final File stateFile = getStateFile();
         PrintWriter fileWriter = null;
         try {
             fileWriter = new PrintWriter(new FileWriter(stateFile));
-            for (String fileName : fileNameSet) {
+            final ArrayList<String> sortedfileNameList = new ArrayList<>(fileNameSet);
+            for (String fileName : sortedfileNameList) {
                 fileWriter.println(fileName);
             }
         } finally {
