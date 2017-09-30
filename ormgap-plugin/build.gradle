@@ -1,17 +1,18 @@
 apply plugin: 'groovy'
-apply plugin: 'java'
+apply plugin: 'java-library'
 
 repositories {
-  mavenCentral()
+  jcenter()
+  google()
   mavenLocal()
 }
 
 dependencies {
-  compile gradleApi()
-  compile localGroovy()
-  compile 'com.android.tools.build:gradle:1.1.3'
-  compile("com.j256.ormlite:ormlite-android:$ORMLITE_VERSION")
-  project ':ormgap-ormlite-extension'
+  project (':ormgap-ormlite-extension')
+  implementation gradleApi()
+  implementation localGroovy()
+  implementation 'com.android.tools.build:gradle:3.0.0-beta6'
+  implementation("com.j256.ormlite:ormlite-android:$ORMLITE_VERSION")
 }
 
 logging.captureStandardOutput LogLevel.INFO

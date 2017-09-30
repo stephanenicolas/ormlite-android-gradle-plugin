@@ -9,7 +9,7 @@ android:
     - extra-android-m2repository
 
 jdk:
-  - oraclejdk7
+  - openjdk8
 
 install:
     # Without TERM=dumb, we get mangled output in the Travis console
