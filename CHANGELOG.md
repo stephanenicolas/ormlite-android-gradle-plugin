@@ -1,3 +1,5 @@
+### version 3.0.2 (TDR)
+
 ### version 3.0.1 (September 30th 2017)
 
 * fix issue 18: https://github.com/stephanenicolas/ormlite-android-gradle-plugin/issues/18
