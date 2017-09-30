@@ -1,29 +1,18 @@
-buildscript {
-  repositories {
-    mavenCentral()
-    jcenter()
-  }
-
-  dependencies {
-    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
-  }
-}
-
 apply plugin: 'groovy'
-apply plugin: 'java'
-apply plugin: 'nexus'
+apply plugin: 'java-library'
 
 repositories {
-  mavenCentral()
+  jcenter()
+  google()
   mavenLocal()
 }
 
 dependencies {
-  compile gradleApi()
-  compile localGroovy()
-  compile 'com.android.tools.build:gradle:1.1.3'
-  compile("com.j256.ormlite:ormlite-android:$ORMLITE_VERSION")
-  project ':ormgap-ormlite-extension'
+  project (':ormgap-ormlite-extension')
+  implementation gradleApi()
+  implementation localGroovy()
+  implementation 'com.android.tools.build:gradle:3.0.0-beta6'
+  implementation("com.j256.ormlite:ormlite-android:$ORMLITE_VERSION")
 }
 
 logging.captureStandardOutput LogLevel.INFO
@@ -41,32 +30,4 @@ project.afterEvaluate {
   }
 }
 
-modifyPom {
-  project {
-    name "ORM LITE Android Gradle plugin"
-    description POM_DESCRIPTION
-    url POM_URL
-
-    scm {
-      url POM_SCM_URL
-      connection POM_SCM_CONNECTION
-      developerConnection POM_SCM_DEV_CONNECTION
-    }
-
-    licenses {
-      license {
-        name POM_LICENCE_NAME
-        url POM_LICENCE_URL
-        distribution POM_LICENCE_DIST
-      }
-    }
-
-    developers {
-      developer {
-        id POM_DEVELOPER_ID
-        name POM_DEVELOPER_NAME
-      }
-    }
-  }
-}
-
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

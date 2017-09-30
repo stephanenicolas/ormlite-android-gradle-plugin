@@ -77,22 +77,15 @@ public class ORMGAPPlugin implements Plugin<Project> {
           setSources(project.android.sourceSets["main"].java.srcDirs[0].canonicalPath)
         }
 
-        path = project.android.sourceSets[variantName].res.srcDirs[0].canonicalPath
-        if (new File(path).exists()) {
-          setResFolder(path);
-        } else {
-          setResFolder(project.android.sourceSets["main"].res.srcDirs[0].canonicalPath)
-        }
+        path = project.android.sourceSets[variantName].assets.srcDirs[0].canonicalPath
+        setDestDirFolder(path);
         setClasspath(classpathFileCollection.asPath)
-        into("ormlite_config.txt")
-        outputs.upToDateWhen {
-          false
-        }
-      }
-      project.tasks.getByName(createConfigFileTask).mustRunAfter(javaCompile)
+        into(project.ormgap.configFileName)
+      }.dependsOn(javaCompile)
+
+      variant.mergeAssets.dependsOn(createConfigFileTask)
 
       log.debug("ORMLite config file creation task installed after compile task.")
-      variant.assemble.dependsOn(createConfigFileTask)
       if (!hasLib) {
         variant.install?.dependsOn(createConfigFileTask)
       }

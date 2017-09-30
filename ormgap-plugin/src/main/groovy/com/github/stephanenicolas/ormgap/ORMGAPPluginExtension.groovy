@@ -1,5 +1,5 @@
 package com.github.stephanenicolas.ormgap
 
 class ORMGAPPluginExtension {
-  String configFileName
+  String configFileName = "ormlite_config.txt"
 }

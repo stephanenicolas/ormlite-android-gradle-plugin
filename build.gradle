@@ -1,12 +1,10 @@
 buildscript {
   repositories {
-    mavenCentral()
     jcenter()
     maven { url "https://oss.sonatype.org/content/groups/public" }
   }
 
   dependencies {
-    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7.1'
     classpath 'com.github.townsfolk:gradle-release:1.2'
   }
 }
@@ -14,15 +12,14 @@ buildscript {
 allprojects {
   repositories {
     mavenCentral()
+    jcenter()
   }
 
   group = GROUP
+  version = VERSION_NAME
 
   apply plugin: 'maven'
 }
-
-apply plugin: 'release'
-createReleaseTag.dependsOn ':ormgap-plugin:uploadArchives', ':ormgap-ormlite-extension:uploadArchives'
 
 task wrapper(type: Wrapper) {
   gradleVersion = '2.2.1'
