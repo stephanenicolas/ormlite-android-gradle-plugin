@@ -7,7 +7,7 @@ As of version 1.0.13, ORM GAP is fully incremental and gets executed only when c
 
 ### Usage 
 
-```groovy
+```gradle
 //build.gradle
 
 buildscript {
@@ -62,7 +62,7 @@ ORMGAP will do the following to your build :
 
 ### Benchmarking
 
-Our plan is to make a benchmarking app using th example android app.
+Our plan is to make a benchmarking app using the example android app.
 
 For now, we can only give you a number from our experience at Groupon: the average gain, for all devices of our 50 million users is 10 ms per DAO creation. It might not seem much, but for large apps, it makes a difference. In our app, we gained 400 ms with ORMGAP.
 
