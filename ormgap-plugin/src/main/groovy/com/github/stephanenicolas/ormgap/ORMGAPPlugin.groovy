@@ -112,7 +112,7 @@ public class ORMGAPPlugin implements Plugin<Project> {
     Properties properties = new Properties()
     properties.load(getClass().getClassLoader().getResourceAsStream("build.properties"))
     project.dependencies {
-      provided 'com.github.stephanenicolas.ormgap:ormgap-ormlite-extension:' + properties.get("com.github.stephanenicolas.ormgap.version")
+      compileOnly 'com.github.stephanenicolas.ormgap:ormgap-ormlite-extension:' + properties.get("com.github.stephanenicolas.ormgap.version")
     }
   }
 
