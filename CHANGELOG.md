@@ -1,4 +1,9 @@
-### version 3.0.2 (TDR)
+### version 3.0.3 (TBR)
+
+### version 3.0.2 (Oct. 7th 2017)
+
+* fix issue 20: https://github.com/stephanenicolas/ormlite-android-gradle-plugin/issues/20
+ORM GAP now works with gradle 4.2.1
 
 ### version 3.0.1 (September 30th 2017)
 
