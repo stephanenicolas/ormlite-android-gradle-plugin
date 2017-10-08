@@ -72,20 +72,20 @@ public class ORMGAPPlugin implements Plugin<Project> {
 
         def path = project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath
         if (new File(path).exists()) {
-          setSources(path);
+          setSources(path)
         } else {
           setSources(project.android.sourceSets["main"].java.srcDirs[0].canonicalPath)
         }
 
         path = project.android.sourceSets[variantName].assets.srcDirs[0].canonicalPath
-        setDestDirFolder(path);
-        setClasspath(classpathFileCollection.asPath)
+        setDestDirFolder(path)
+        setClasspath(classpathFileCollection)
         into(project.ormgap.configFileName)
       }.dependsOn(javaCompile)
 
       variant.mergeAssets.dependsOn(createConfigFileTask)
 
-      log.debug("ORMLite config file creation task installed after compile task.")
+      log.debug("ORMLite config file creation task installed after mergeAssets task.")
       if (!hasLib) {
         variant.install?.dependsOn(createConfigFileTask)
       }
