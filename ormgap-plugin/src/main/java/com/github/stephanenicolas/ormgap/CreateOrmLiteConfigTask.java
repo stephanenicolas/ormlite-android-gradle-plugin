@@ -33,7 +33,7 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
     public static final String TASK_TEMP_FILE__NAME = "intermediates/incremental/createOrmLiteConfigTask/";
     private File configFileName;
     private Object sourceDir;
-    private String classpath;
+    private FileCollection classpath;
     private File dstDir;
 
     public CreateOrmLiteConfigTask() {
@@ -44,6 +44,11 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         ConfigurableFileTree fileTree = getProject().fileTree(this.sourceDir);
         fileTree.include("**/*.java");
         return fileTree;
+    }
+
+    @InputFiles
+    public FileCollection getClasspath() {
+        return classpath;
     }
 
     @OutputFile
@@ -61,8 +66,7 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         return new File(taskDir, "using-ormlite.txt");
     }
 
-
-    public void setClasspath(String classpath) throws IOException {
+    public void setClasspath(FileCollection classpath) throws IOException {
         this.classpath = classpath;
     }
 
@@ -101,7 +105,7 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         final CreateOrmLiteConfigAction createOrmLiteConfigAction
                 = new CreateOrmLiteConfigAction(configFileName,
                                                 getProject().file(sourceDir),
-                                                classpath, getLogger());
+                                                classpath.getAsPath(), getLogger());
 
         createOrmLiteConfigAction.execute();
 
@@ -178,16 +182,6 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
         }
         getLogger().debug("loading new state: " +  files.toString());
         return files;
-    }
-
-    private SimpleFileCollection findFilesUsingOrmLite(Iterable<File> fileSet) {
-        SimpleFileCollection result = new SimpleFileCollection();
-        for (File file : fileSet) {
-            if(isUsingOrmLite(file)) {
-                result.getFiles().add(file);
-            }
-        }
-        return result;
     }
 
     private boolean isUsingOrmLite(File file) {
