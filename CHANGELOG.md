@@ -1,4 +1,8 @@
-### version 3.0.4 (TBR)
+### version 3.0.5 (TBR)
+
+### version 3.0.4 (Jan. 22snd 2018)
+
+* fix a small warning during the build related to scanning of source directories
 
 ### version 3.0.3 (Oct. 7th 2017)
 
