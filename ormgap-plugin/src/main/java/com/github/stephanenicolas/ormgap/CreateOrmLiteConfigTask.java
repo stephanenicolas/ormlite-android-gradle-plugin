@@ -1,5 +1,16 @@
 package com.github.stephanenicolas.ormgap;
 
+import org.gradle.api.Action;
+import org.gradle.api.DefaultTask;
+import org.gradle.api.file.ConfigurableFileTree;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
+import org.gradle.api.tasks.incremental.InputFileDetails;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,17 +22,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.gradle.api.Action;
-import org.gradle.api.DefaultTask;
-import org.gradle.api.file.ConfigurableFileTree;
-import org.gradle.api.file.FileCollection;
-import org.gradle.api.internal.file.collections.SimpleFileCollection;
-import org.gradle.api.tasks.CacheableTask;
-import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.TaskAction;
-import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
-import org.gradle.api.tasks.incremental.InputFileDetails;
+
+import static java.lang.String.format;
 
 /**
  * Generate an ORM Lite configuration file.
@@ -185,6 +187,12 @@ public class CreateOrmLiteConfigTask extends DefaultTask {
     }
 
     private boolean isUsingOrmLite(File file) {
+        if (file.isDirectory()) {
+            return false;
+        }
+        if (!file.exists()) {
+            throw new RuntimeException(format("File %s doesn't exist.", file.getAbsolutePath()));
+        }
         BufferedReader reader = null;
         boolean found = false;
         try {
