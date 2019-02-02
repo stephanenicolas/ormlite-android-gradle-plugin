@@ -9,6 +9,7 @@ import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
 import org.gradle.api.plugins.PluginCollection
 import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.tasks.TaskProvider
 
 /**
  * ORM LITE ANDROID PLUGIN
@@ -48,12 +49,6 @@ public class ORMGAPPlugin implements Plugin<Project> {
     variants.all { variant ->
       log.debug("In variant '${variant.name}'.")
 
-      JavaCompile javaCompile = variant.javaCompile
-
-      FileCollection classpathFileCollection = project.files(project.android.bootClasspath)
-      classpathFileCollection += javaCompile.classpath
-      classpathFileCollection += project.files(javaCompile.destinationDir)
-
       String variantName
       if (variant instanceof ApplicationVariant){
         variantName = ((ApplicationVariant) variant).productFlavors[0]?.name
@@ -66,9 +61,16 @@ public class ORMGAPPlugin implements Plugin<Project> {
           variantName = "main"
       }
 
-      def createConfigFileTask = "createORMLiteConfigFile${variant.name.capitalize()}"
-      project.task(createConfigFileTask, type: CreateOrmLiteConfigTask) {
+      def createConfigFileTaskName = "createORMLiteConfigFile${variant.name.capitalize()}"
+      def createConfigFileTask = project.tasks.register(createConfigFileTaskName, CreateOrmLiteConfigTask) {
         description = "Create an ORM Lite configuration file"
+
+
+        TaskProvider<JavaCompile> javaCompile = variant.getJavaCompileProvider()
+
+        FileCollection classpathFileCollection = project.files(project.android.bootClasspath)
+        classpathFileCollection += javaCompile.get().classpath
+        classpathFileCollection += project.files(javaCompile.get().destinationDir)
 
         def path = project.android.sourceSets[variantName].java.srcDirs[0].canonicalPath
         if (new File(path).exists()) {
@@ -81,13 +83,14 @@ public class ORMGAPPlugin implements Plugin<Project> {
         setDestDirFolder(path)
         setClasspath(classpathFileCollection)
         into(project.ormgap.configFileName)
-      }.dependsOn(javaCompile)
+      }
+      createConfigFileTask.configure { dependsOn javaCompile }
 
-      variant.mergeAssets.dependsOn(createConfigFileTask)
+      variant.mergeAssetsProvider.configure { dependsOn createConfigFileTask }
 
       log.debug("ORMLite config file creation task installed after mergeAssets task.")
       if (!hasLib) {
-        variant.install?.dependsOn(createConfigFileTask)
+        variant.installProvider?.configure { dependsOn createConfigFileTask }
       }
       log.debug("Done with variant '${variant.name}'.")
     }

@@ -1,6 +1,6 @@
 buildscript {
   repositories {
-    mavenCentral()
+    google()
     jcenter()
 
     // NOTE: This is only needed when developing the plugin!
@@ -8,8 +8,8 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:1.1.3'
-    classpath 'com.github.stephanenicolas.ormgap:ormgap-plugin:3.0.1'
+    classpath 'com.android.tools.build:gradle:3.3.0'
+    classpath 'com.github.stephanenicolas.ormgap:ormgap-plugin:3.0.5-SNAPSHOT'
   }
 }
 
@@ -18,7 +18,8 @@ apply plugin: 'ormgap'
 
 
 repositories {
-  mavenCentral()
+  google()
+  jcenter()
 
   // NOTE: This is only needed when developing the plugin!
   mavenLocal()
@@ -29,8 +30,8 @@ dependencies {
 }
 
 android {
-  compileSdkVersion 22
-  buildToolsVersion '22.0.1'
+  compileSdkVersion 28
+  buildToolsVersion '28.0.3'
 
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_7

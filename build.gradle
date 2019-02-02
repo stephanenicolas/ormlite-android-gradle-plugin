@@ -21,10 +21,6 @@ allprojects {
   apply plugin: 'maven'
 }
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.2.1'
-}
-
 task cleanExample(type: Exec) {
   executable = '../gradlew'
   workingDir = project.file('ormgap-example')

@@ -2,8 +2,8 @@ apply plugin: 'groovy'
 apply plugin: 'java-library'
 
 repositories {
-  jcenter()
   google()
+  jcenter()
   mavenLocal()
 }
 
@@ -11,7 +11,7 @@ dependencies {
   project (':ormgap-ormlite-extension')
   implementation gradleApi()
   implementation localGroovy()
-  implementation 'com.android.tools.build:gradle:3.0.0-beta7'
+  implementation 'com.android.tools.build:gradle:3.3.0'
   implementation("com.j256.ormlite:ormlite-android:$ORMLITE_VERSION")
 }
 
