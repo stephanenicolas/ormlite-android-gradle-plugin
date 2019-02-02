@@ -1,3 +1,5 @@
+### version 3.0.6 (TBR)
+
 ### version 3.0.5 (February 2nd, 2019)
 
 * Solve issue 27. Support Task Configuration Avoidance 
